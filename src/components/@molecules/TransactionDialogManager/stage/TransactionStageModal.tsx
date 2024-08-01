@@ -1,4 +1,5 @@
 import { queryOptions } from '@tanstack/react-query'
+import { useRouter } from 'next/router'
 import { Dispatch, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import styled, { css } from 'styled-components'
@@ -30,7 +31,7 @@ import {
   TransactionFlowAction,
   TransactionStage,
 } from '@app/transaction-flow/types'
-import { ConfigWithEns } from '@app/types'
+import { ConfigWithEns, TransactionDisplayItem } from '@app/types'
 import { getReadableError } from '@app/utils/errors'
 import { getIsCachedData } from '@app/utils/getIsCachedData'
 import { useQuery } from '@app/utils/query/useQuery'
@@ -268,6 +269,19 @@ export const handleBackToInput = (dispatch: Dispatch<TransactionFlowAction>) => 
   dispatch({ name: 'resetTransactionStep' })
 }
 
+function useCreateSubnameRedirect(
+  stage: TransactionStage,
+  subdomain?: TransactionDisplayItem['value'],
+) {
+  const router = useRouter()
+
+  useEffect(() => {
+    if (stage === 'complete' && typeof subdomain === 'string') {
+      router.push(`/${subdomain}`)
+    }
+  }, [stage, subdomain])
+}
+
 export const TransactionStageModal = ({
   actionName,
   currentStep,
@@ -368,6 +382,11 @@ export const TransactionStageModal = ({
       }),
     },
   })
+
+  useCreateSubnameRedirect(
+    stage,
+    displayItems.find((i) => i.label === 'subname' && i.type === 'name')?.value,
+  )
 
   const FilledDisplayItems = useMemo(
     () => <DisplayItems displayItems={[...(displayItems || [])]} />,
