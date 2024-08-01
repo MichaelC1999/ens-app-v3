@@ -352,6 +352,7 @@ const EthResultItem = ({
     name,
     query: { enabled: !usingPlaceholder },
   })
+  console.log('EthResultItem name SearchResult:', name)
   const zorb = useZorb(name, 'name')
   const { registrationStatus, isLoading, beautifiedName } = useBasicName({
     name,
@@ -469,8 +470,9 @@ export const SearchResult = ({
   selected,
   searchItem,
   usingPlaceholder,
-}: SearchResultProps) =>
-  match(searchItem)
+}: SearchResultProps) => {
+  console.log('searchitem:::', searchItem)
+  return match(searchItem)
     .with({ nameType: 'error' }, ({ text }) => (
       <SearchItemContainer data-testid="search-result-error" $selected $error>
         <Typography weight="bold">{text}</Typography>
@@ -518,3 +520,4 @@ export const SearchResult = ({
         <NoInputYetTypography weight="bold">{searchItem.text}</NoInputYetTypography>
       </SearchItemContainer>
     ))
+}

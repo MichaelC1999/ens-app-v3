@@ -69,6 +69,7 @@ export const useProfile = ({
   subgraphEnabled = true,
   enabled = true,
 }: UseProfileParameters) => {
+  console.log('HERE PASSES THE NAME', name)
   const {
     data: subgraphRecords,
     isFetching: isSubgraphRecordsFetching,
@@ -123,6 +124,7 @@ export const useProfile = ({
 }
 
 export const usePrefetchProfile = ({ name }: { name: string }) => {
+  console.log('nemo', name)
   const { data: subgraphRecords } = useSubgraphRecords({ name })
   usePrefetchRecords(getProfileRecordsParameters({ name, subgraphRecords }))
 }

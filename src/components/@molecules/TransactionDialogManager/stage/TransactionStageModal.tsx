@@ -341,7 +341,7 @@ export const TransactionStageModal = ({
     enabled: canEnableTransactionRequest,
     refetchOnMount: 'always',
   })
-
+  console.log('DATA', transactionRequestQuery)
   const { data: request, isLoading: requestLoading, error: requestError } = transactionRequestQuery
   const isTransactionRequestCachedData = getIsCachedData(transactionRequestQuery)
 
@@ -449,6 +449,7 @@ export const TransactionStageModal = ({
         </Button>
       )
     }
+    console.log('request ', request)
     return (
       <Button
         disabled={

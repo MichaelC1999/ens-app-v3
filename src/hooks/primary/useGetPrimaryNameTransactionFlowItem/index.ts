@@ -41,7 +41,7 @@ export const useGetPrimaryNameTransactionFlowItem = (
 
   const reverseRegistryName = useReverseRegistryName({ address: address!, enabled: _enabled })
   const latestResolverAddress = useContractAddress({ contract: 'ensPublicResolver' })
-
+  console.log('HERE', latestResolverAddress)
   const { isLoading, isFetching } = reverseRegistryName
 
   const isActive = _enabled && !isLoading && !isFetching

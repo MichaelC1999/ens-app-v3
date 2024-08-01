@@ -13,10 +13,10 @@ export const useContractAddress = <
   blockNumber?: bigint
 }) => {
   const client = useClient()
-
-  return getSupportedChainContractAddress({
+  const res = getSupportedChainContractAddress({
     client,
     contract,
     blockNumber,
   })
+  return res
 }

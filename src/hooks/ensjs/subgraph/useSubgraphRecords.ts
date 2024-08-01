@@ -33,7 +33,8 @@ export const getSubgraphRecordsQueryFn =
     if (!name) throw new Error('name is required')
 
     const client = config.getClient({ chainId })
-
+    console.log('GRAPH: ', name)
+    console.log(getSubgraphRecords(client, { name, ...params }))
     return getSubgraphRecords(client, { name, ...params })
   }
 
@@ -63,7 +64,7 @@ export const useSubgraphRecords = <TParams extends UseSubgraphRecordsParameters>
   })
 
   const query = useQuery(preparedOptions)
-
+  console.log('useQuery: ', query, preparedOptions)
   return {
     ...query,
     refetchIfEnabled: preparedOptions.enabled ? query.refetch : () => {},
@@ -71,14 +72,3 @@ export const useSubgraphRecords = <TParams extends UseSubgraphRecordsParameters>
   }
 }
 
-export const usePrefetchSubgraphRecords = <TParams extends UseSubgraphRecordsParameters>(
-  params: TParams,
-) => {
-  const initialOptions = useQueryOptions({
-    params,
-    functionName: 'getSubgraphRecords',
-    queryDependencyType: 'graph',
-    queryFn: getSubgraphRecordsQueryFn,
-  })
-  return usePrefetchQuery(initialOptions)
-}
