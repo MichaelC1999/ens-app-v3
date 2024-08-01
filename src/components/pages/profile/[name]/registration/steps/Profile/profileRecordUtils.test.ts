@@ -1,3 +1,5 @@
+import { group } from 'console'
+
 import { describe, expect, it } from 'vitest'
 
 import { ProfileRecord } from '@app/constants/profileRecordOptions'
@@ -573,6 +575,12 @@ describe('profileToProfileRecords', () => {
       }
       const records = [
         {
+          key: 'eth',
+          type: 'addr',
+          group: 'address',
+          value: '',
+        },
+        {
           key: 'ipfs',
           type: 'contenthash',
           group: 'website',
@@ -592,6 +600,12 @@ describe('profileToProfileRecords', () => {
         createdAt: createDateAndValue(new Date('2020-01-01T00:00:00.000Z').getTime()),
       }
       const records = [
+        {
+          key: 'eth',
+          type: 'addr',
+          group: 'address',
+          value: '',
+        },
         {
           key: 'ipfs',
           type: 'contenthash',
@@ -720,27 +734,29 @@ describe('getProfileRecordsDiff', () => {
   it('should return an eth record with value = "" if the eth record is cleared', () => {
     const currentRecords: ProfileRecord[] = [
       {
-        "key": "eth",
-        "type": "addr",
-        "group": "address",
-        "value": "",
-    }
+        key: 'eth',
+        type: 'addr',
+        group: 'address',
+        value: '',
+      },
     ]
 
     const previousRecords: ProfileRecord[] = [
       {
-        "key": "eth",
-        "type": "addr",
-        "group": "address",
-        "value": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
-    }
+        key: 'eth',
+        type: 'addr',
+        group: 'address',
+        value: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+      },
     ]
     const recordsDiff = getProfileRecordsDiff(currentRecords, previousRecords)
-    expect(recordsDiff).toEqual([{
-      key: "eth",
-      type: "addr",
-      group: "address",
-      value: ""
-    }])
+    expect(recordsDiff).toEqual([
+      {
+        key: 'eth',
+        type: 'addr',
+        group: 'address',
+        value: '',
+      },
+    ])
   })
 })
